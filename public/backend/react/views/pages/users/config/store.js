@@ -59,7 +59,9 @@ const storeSlice = createSlice({
     },
     reducers: {
         my_action: function (state, { type, payload }) {
-            console.log('this is called');
+            // console.log('this is');
+            // console.log(type);
+            // console.log(payload)
         },
         add: (state, { type, payload }) => {
             state.all = payload;

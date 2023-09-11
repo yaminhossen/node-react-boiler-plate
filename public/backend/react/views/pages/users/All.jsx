@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import setup from './config/setup';
 import CanvasDetails from './components/management/CanvasDetails';
@@ -7,10 +7,23 @@ function All() {
     const data_store = useSelector((state) => state[setup.prefix]);
     setup.dispatch = useDispatch();
     const { get_data, set_data } = setup.actions;
+    const [users, setUsers] = useState([]);
+
+     useEffect(() => {
+        const url = `http://localhost:5000/dashboard/user`;
+        fetch(url)
+        .then((res) => res.json())
+        .then((data)=>{
+            console.log(data)
+            setUsers(data);
+        })
+       
+    }, []);
 
     useEffect(() => {
         get_data();
     }, []);
+    console.log(data_store)
 
     return (
         <>
@@ -84,7 +97,8 @@ function All() {
                         </thead>
                         <tbody className="table-border-bottom-0">
                             {
-                                data_store[setup.prefix + 's'].data?.map((user, index) => {
+                                // data_store[setup.prefix + 's'].data?.map((user, index) => {
+                                users.map((user, index) => {
                                     return (
                                         <tr key={user.id}>
                                             <td><input type="checkbox" className="form-check-input" /></td>
